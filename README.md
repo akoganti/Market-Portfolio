@@ -6,6 +6,4 @@ Left over cash (if any) is invested into VTIP(Short-Term Inflation-Protected Sec
 
 Motivation behind this portfolio comes from my FIN 494: Portfolio Engineering class and William Sharpe.
 
-Check out: 
-https://youtu.be/XsXOLZ9U7jI?t=2345 (William Sharpe supporting the market portfolio) and 
-https://youtu.be/dj-RO4mh-wA?t=2125 (Eugene F. Fama also somewhat supporting the market portfolio)
+Check out: https://youtu.be/XsXOLZ9U7jI?t=2345 (William Sharpe supporting the market portfolio) and https://youtu.be/dj-RO4mh-wA?t=2125 (Eugene F. Fama also somewhat supporting the market portfolio)
