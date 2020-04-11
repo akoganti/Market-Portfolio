@@ -7,9 +7,7 @@ import pandas as pd
 import datetime
 
 def vtiScraper():
-    # Archive where all the index reports are
     vtiURL = "http://www.crsp.org/fact-sheet-archive"
-    # Getting the urls for all VTI index reports and scraping date and market cap information
     r = requests.get(vtiURL)
     soup = BeautifulSoup(r.text,features="html.parser")
     marketCaps = []
@@ -32,10 +30,8 @@ def vtiScraper():
                 except:
                     market_cap = 'n/a'
             marketCaps.append(market_cap)
-    # Saving information to dataframe
     vtiDF = pd.DataFrame({'date':pd.to_datetime(dates, infer_datetime_format=True),'Market Cap':marketCaps})
     return vtiDF
-
 
 def vxusScraper():
     cur_year = datetime.datetime.now().year
@@ -78,6 +74,45 @@ def vxusScraper():
                         mc = [int(s) for s in mc_3.split() if s.isdigit()][1]
                         marketCaps.append(mc)
                     break
-    # Saving information to dataframe
     vxusDF = pd.DataFrame({'date':pd.to_datetime(dates, infer_datetime_format=True),'Market Cap':marketCaps})
     return vxusDF
+
+def bndScraper():
+    cur_year = datetime.datetime.now().year
+    cur_month = datetime.datetime.now().month
+    error_url = 'https://www.ftserussell.com/products/indices/home/errorview?aspxerrorpath=/Analytics/FactSheets/Home/DownloadSingleIssueByDate'
+    error_url2 = 'https://research.ftserussell.com/Analytics/FactSheets/Home/ErrorPage?ErrorMessage=There%20has%20been%20a%20problem%20downloading%20this%20file'
+    dates = []
+    marketCaps = []
+    for y in range(2019,cur_year+1):
+        year = str(y)
+        for m in range(1,13):
+            if y==cur_year and m>cur_month:
+                break
+            if m < 10:
+                month = '0'+ str(m)
+            else:
+                month = str(m)
+            for d in range(28,32):
+                day = str(d)
+                date = year + month + day
+                status = 'true'
+                url = "https://research.ftserussell.com/Analytics/FactSheets/Home/DownloadSingleIssueByDate?IssueName=USBIG&IssueDate="+date+"&IsManual="+status
+                response = requests.get(url)
+                if response.url == error_url or response.url == error_url2:
+                    status = 'false'
+                    url = "https://research.ftserussell.com/Analytics/FactSheets/Home/DownloadSingleIssueByDate?IssueName=USBIG&IssueDate="+date+"&IsManual="+status
+                    response = requests.get(url)
+                elif response.url != error_url and response.url != error_url2:
+                    dates.append(date)
+                    pdf = requests.get(url)
+                    open_pdf = io.BytesIO(pdf.content)
+                    read_pdf = PyPDF2.PdfFileReader(open_pdf)
+                    pdf_page2 = read_pdf.getPage(0)
+                    page_text = pdf_page2.extractText()
+                    info = re.findall('USBIG\d,\d+,\d+.\d\d', page_text, re.IGNORECASE)
+                    mc = float(re.sub(r'USBIG\d,\d\d\d','',info[0]).replace(',',''))
+                    marketCaps.append(mc)
+                    break
+    bndDF = pd.DataFrame({'date':pd.to_datetime(dates, infer_datetime_format=True),'Market Cap':marketCaps})
+    return bndDF
