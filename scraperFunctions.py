@@ -110,9 +110,49 @@ def bndScraper():
                     read_pdf = PyPDF2.PdfFileReader(open_pdf)
                     pdf_page2 = read_pdf.getPage(0)
                     page_text = pdf_page2.extractText()
-                    info = re.findall('USBIG\d,\d+,\d+.\d\d', page_text, re.IGNORECASE)
-                    mc = float(re.sub(r'USBIG\d,\d\d\d','',info[0]).replace(',',''))
+                    info = re.findall('USBIG\d+,\d+,\d+.\d\d', page_text, re.IGNORECASE)
+                    mc = float(re.sub(r'USBIG\d+,\d\d\d','',info[0]).replace(',',''))
                     marketCaps.append(mc)
                     break
     bndDF = pd.DataFrame({'date':pd.to_datetime(dates, infer_datetime_format=True),'Market Cap':marketCaps})
     return bndDF
+
+def bndxScraper():
+    cur_year = datetime.datetime.now().year
+    cur_month = datetime.datetime.now().month
+    error_url = 'https://www.ftserussell.com/products/indices/home/errorview?aspxerrorpath=/Analytics/FactSheets/Home/DownloadSingleIssueByDate'
+    error_url2 = 'https://research.ftserussell.com/Analytics/FactSheets/Home/ErrorPage?ErrorMessage=There%20has%20been%20a%20problem%20downloading%20this%20file'
+    dates = []
+    marketCaps = []
+    for y in range(2019,cur_year+1):
+        year = str(y)
+        for m in range(1,13):
+            if y==cur_year and m>cur_month:
+                break
+            if m < 10:
+                month = '0'+ str(m)
+            else:
+                month = str(m)
+            for d in range(28,32):
+                day = str(d)
+                date = year + month + day
+                status = 'true'
+                url = "https://research.ftserussell.com/Analytics/FactSheets/Home/DownloadSingleIssueByDate?IssueName=WBIG&IssueDate="+date+"&IsManual="+status
+                response = requests.get(url)
+                if response.url == error_url or response.url == error_url2:
+                    status = 'false'
+                    url = "https://research.ftserussell.com/Analytics/FactSheets/Home/DownloadSingleIssueByDate?IssueName=WBIG&IssueDate="+date+"&IsManual="+status
+                    response = requests.get(url)
+                elif response.url != error_url and response.url != error_url2:
+                    dates.append(date)
+                    pdf = requests.get(url)
+                    open_pdf = io.BytesIO(pdf.content)
+                    read_pdf = PyPDF2.PdfFileReader(open_pdf)
+                    pdf_page2 = read_pdf.getPage(0)
+                    page_text = pdf_page2.extractText()
+                    info = re.findall('WorldBIG\d+,\d+,\d+.\d\d', page_text, re.IGNORECASE)
+                    mc = float(re.sub(r'WorldBIG\d+,\d\d\d','',info[0]).replace(',',''))
+                    marketCaps.append(mc)
+                    break
+    bndxDF = pd.DataFrame({'date':pd.to_datetime(dates, infer_datetime_format=True),'Market Cap':marketCaps})
+    return bndxDF
