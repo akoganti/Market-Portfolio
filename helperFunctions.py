@@ -30,3 +30,18 @@ def etfPriceData():
         etf_price_data = etf_price_data.reset_index(drop=True)
     # Saving historical price data
     etf_price_data.to_csv('etf_price_data.csv',index=False)
+
+def etfCurrPrices(etfList):
+     options = webdriver.ChromeOptions()
+     options.add_argument('--headless')
+     driver = webdriver.Chrome('/Users/avinaashkoganti/chromedriver',options=options)
+     prices = []
+     for etf in etfList:
+         driver.get('https://finance.yahoo.com/quote/'+etf)
+         html = driver.page_source
+         soup = BeautifulSoup(html,features="html.parser")
+         x = soup.find('span', {'class':'Trsdu(0.3s) Fw(b) Fz(36px) Mb(-4px) D(ib)'})
+         price = float(x.text)
+         prices.append(price)
+     driver.close()
+     return prices
