@@ -1,6 +1,6 @@
 # World Bond/Stock(WBS) Portfolio
 
-Constructing the WBS portfolio from 4 Vanguard ETFs: VTI(US Equity), VXUS(International Equity), BND(US Bond), and BNDX(International Bond). To find market cap data, I scrape index reports from the providers of the indices that the ETFs track. I also scrape current prices for the ETFs from yahoo finance.
+Constructing the WBS portfolio from 4 Vanguard ETFs: VTI(US Equity), VXUS(International Equity), BND(US Bond), and BNDX(International Bond). To find market cap data, I scrape index reports from the providers of the indices that the ETFs track. I also scrape price data for the ETFs from yahoo finance.
 
 If you are more risk averse, you can place a portion of your portfolio into VTIP(Short-Term Inflation-Protected Securities).
 
