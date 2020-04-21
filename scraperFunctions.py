@@ -32,7 +32,7 @@ def vtiScraper():
                     market_cap = 'n/a'
             marketCaps.append(market_cap)
     vtiDF = pd.DataFrame({'date':pd.to_datetime(dates, infer_datetime_format=True),'Market Cap':marketCaps})
-    vtiDF.to_csv('vti_MC_data.csv',index=False)
+    vtiDF.to_csv('Data/vti_MC_data.csv',index=False)
 
 def vxusScraper():
     cur_year = datetime.datetime.now().year
@@ -74,7 +74,7 @@ def vxusScraper():
                         marketCaps.append(mc)
                     break
     vxusDF = pd.DataFrame({'date':pd.to_datetime(dates, infer_datetime_format=True),'Market Cap':marketCaps})
-    vxusDF.to_csv('vxus_MC_data.csv',index=False)
+    vxusDF.to_csv('Data/vxus_MC_data.csv',index=False)
 
 def bndScraper():
     cur_year = datetime.datetime.now().year
@@ -114,7 +114,7 @@ def bndScraper():
                     marketCaps.append(mc)
                     break
     bndDF = pd.DataFrame({'date':pd.to_datetime(dates, infer_datetime_format=True),'Market Cap':marketCaps})
-    bndDF.to_csv('bnd_MC_data.csv',index=False)
+    bndDF.to_csv('Data/bnd_MC_data.csv',index=False)
 
 def bndxScraper():
     cur_year = datetime.datetime.now().year
@@ -154,4 +154,4 @@ def bndxScraper():
                     marketCaps.append(mc)
                     break
     bndxDF = pd.DataFrame({'date':pd.to_datetime(dates, infer_datetime_format=True),'Market Cap':marketCaps})
-    bndxDF.to_csv('bndx_MC_data.csv',index=False)
+    bndxDF.to_csv('Data/bndx_MC_data.csv',index=False)

@@ -29,7 +29,7 @@ def etfPriceData():
         etf_price_data = etf_price_data.append(df)
         etf_price_data = etf_price_data.reset_index(drop=True)
     # Saving historical price data
-    etf_price_data.to_csv('etf_price_data.csv',index=False)
+    etf_price_data.to_csv('Data/etf_price_data.csv',index=False)
 
 def etfCurrPrices(etfList):
      options = webdriver.ChromeOptions()
