@@ -54,7 +54,14 @@ def vxusScraper():
                 day = str(d)
                 date = year + month + day
                 url = "https://research.ftserussell.com/Analytics/FactSheets/Home/DownloadSingleIssueByDate?IssueName=GXUSS&IssueDate="+ date + "&IsManual=false.pdf"
-                response = requests.get(url)
+                try:
+                    response = requests.get(url)
+                except requests.exceptions.ConnectionError:
+                    time.sleep(20)
+                    try:
+                        response = requests.get(url)
+                    except requests.exceptions.ConnectionError:
+                        print('Russel blocking connection, report: '+date)
                 if response.url != error_url:
                     dates.append(date)
                     pdf = requests.get(url)
@@ -97,7 +104,14 @@ def bndScraper():
                 date = year + month + day
                 status = 'true'
                 url = "https://research.ftserussell.com/Analytics/FactSheets/Home/DownloadSingleIssueByDate?IssueName=USBIG&IssueDate="+date+"&IsManual="+status
-                response = requests.get(url)
+                try:
+                    response = requests.get(url)
+                except requests.exceptions.ConnectionError:
+                    time.sleep(20)
+                    try:
+                        response = requests.get(url)
+                    except requests.exceptions.ConnectionError:
+                        print('Russel blocking connection, report: '+date)
                 if response.url == error_url or response.url == error_url2:
                     status = 'false'
                     url = "https://research.ftserussell.com/Analytics/FactSheets/Home/DownloadSingleIssueByDate?IssueName=USBIG&IssueDate="+date+"&IsManual="+status
@@ -137,7 +151,14 @@ def bndxScraper():
                 date = year + month + day
                 status = 'true'
                 url = "https://research.ftserussell.com/Analytics/FactSheets/Home/DownloadSingleIssueByDate?IssueName=WBIG&IssueDate="+date+"&IsManual="+status
-                response = requests.get(url)
+                try:
+                    response = requests.get(url)
+                except requests.exceptions.ConnectionError:
+                    time.sleep(20)
+                    try:
+                        response = requests.get(url)
+                    except requests.exceptions.ConnectionError:
+                        print('Russel blocking connection, report: '+date)
                 if response.url == error_url or response.url == error_url2:
                     status = 'false'
                     url = "https://research.ftserussell.com/Analytics/FactSheets/Home/DownloadSingleIssueByDate?IssueName=WBIG&IssueDate="+date+"&IsManual="+status
