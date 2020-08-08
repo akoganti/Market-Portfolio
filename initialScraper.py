@@ -22,7 +22,7 @@ for link in soup.find_all('a'):
         read_pdf = PDF(open_pdf)[1]
         dates.append(link.text.replace('Quarter Ending ', ''))
         marketCaps.append(float(re.findall('INDEX MARKET CAP\s+\d+,\d+,\d+', read_pdf, re.IGNORECASE)[0].upper().replace('INDEX MARKET CAP','').replace(',',''))/1000)
-vtiDF = pd.DataFrame({'date':pd.to_datetime(dates, infer_datetime_format=True),'Market Cap':marketCaps}).sort_values(by='date', ascending=False).reset_index(drop=True)
+vtiDF = pd.DataFrame({'date':pd.to_datetime(dates, infer_datetime_format=True),'Market Cap':marketCaps}).sort_values(by='date').reset_index(drop=True)
 vtiDF.to_csv('Data/vti_MC_data.csv',index=False)
 print("VTI")
 print(vtiDF)
@@ -48,7 +48,7 @@ for link in links:
     read_pdf = PDF(open_pdf)
     dates.append(re.sub('Dataasat:','',re.findall('Dataasat:\d+\S+\d+', re.sub(' ','',read_pdf[0]), re.IGNORECASE)[0]))
     marketCaps.append(float(re.sub('Totals\s+\d+\s+','',re.findall('Totals\s+\d+\s+\d+,\d+,\d+', read_pdf[1], re.IGNORECASE)[0]).replace(',',''))/1000)
-vxusDF = pd.DataFrame({'date':pd.to_datetime(dates, infer_datetime_format=True),'Market Cap':marketCaps}).sort_values(by='date', ascending=False).reset_index(drop=True)
+vxusDF = pd.DataFrame({'date':pd.to_datetime(dates, infer_datetime_format=True),'Market Cap':marketCaps}).sort_values(by='date').reset_index(drop=True)
 vxusDF.to_csv('Data/vxus_MC_data.csv',index=False)
 print("VXUS")
 print(vxusDF)
@@ -74,7 +74,7 @@ for link in links:
     read_pdf = PDF(open_pdf)[0]
     dates.append(re.sub('FTSE Russell Factsheet\s\S\s','',re.findall('FTSE Russell Factsheet\s\S\s\w+ \d+, \d+', read_pdf, re.IGNORECASE)[0]))
     marketCaps.append(float(re.sub('USBIG\s+\d+,\d+\s+\d+,\d+.\d+\s+','',re.findall('USBIG\s+\d+,\d+\s+\d+,\d+.\d+\s+\d+,\d+.\d+', read_pdf, re.IGNORECASE)[0]).replace(',','')))
-bndDF = pd.DataFrame({'date':pd.to_datetime(dates, infer_datetime_format=True),'Market Cap':marketCaps}).sort_values(by='date', ascending=False).reset_index(drop=True)
+bndDF = pd.DataFrame({'date':pd.to_datetime(dates, infer_datetime_format=True),'Market Cap':marketCaps}).sort_values(by='date').reset_index(drop=True)
 bndDF.to_csv('Data/bnd_MC_data.csv',index=False)
 print("BND")
 print(bndDF)
@@ -100,7 +100,8 @@ for link in links:
     read_pdf = PDF(open_pdf)[0]
     dates.append(re.sub('FTSE Russell Factsheet\s\S\s','',re.findall('FTSE Russell Factsheet\s\S\s\w+ \d+, \d+', read_pdf, re.IGNORECASE)[0]))
     marketCaps.append(float(re.sub('WorldBIG\s+\d+,\d+\s+\d+,\d+.\d+\s+','',re.findall('WorldBIG\s+\d+,\d+\s+\d+,\d+.\d+\s+\d+,\d+.\d+', read_pdf, re.IGNORECASE)[0]).replace(',','')))
-bndxDF = pd.DataFrame({'date':pd.to_datetime(dates, infer_datetime_format=True),'Market Cap':marketCaps}).sort_values(by='date', ascending=False).reset_index(drop=True)
+bndxDF = pd.DataFrame({'date':pd.to_datetime(dates, infer_datetime_format=True),'Market Cap':marketCaps}).sort_values(by='date').reset_index(drop=True)
+bndxDF['Market Cap'] = bndxDF['Market Cap'] - bndDF['Market Cap'] 
 bndxDF.to_csv('Data/bndx_MC_data.csv',index=False)
 print("BNDX")
 print(bndxDF)
