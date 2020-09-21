@@ -1,20 +1,20 @@
 def etfCurrPrices(etfList):
-      options = webdriver.ChromeOptions()
-     options.add_argument('--headless')
-     driver = webdriver.Chrome('/Users/avinaashkoganti/chromedriver',options=options)
-     prices = []
-     for etf in etfList:
-         driver.get('https://finance.yahoo.com/quote/'+etf)
-         html = driver.page_source
-         soup = BeautifulSoup(html,features="html.parser")
-         x = soup.find('span', {'class':'Trsdu(0.3s) Fw(b) Fz(36px) Mb(-4px) D(ib)'})
-         price = float(x.text)
-         prices.append(price)
-     driver.close()
-     return prices
+    options = webdriver.ChromeOptions()
+    options.add_argument('--headless')
+    driver = webdriver.Chrome('/Users/avinaashkoganti/chromedriver',options=options)
+    prices = []
+    for etf in etfList:
+        driver.get('https://finance.yahoo.com/quote/'+etf)
+        html = driver.page_source
+        soup = BeautifulSoup(html,features="html.parser")
+        x = soup.find('span', {'class':'Trsdu(0.3s) Fw(b) Fz(36px) Mb(-4px) D(ib)'})
+        price = float(x.text)
+        prices.append(price)
+    driver.close()
+    return prices
 
 # Enter in total amount you would like to invest under amountInvested 
-amountInvested = 12000
+amountInvested = 340
 
 
 # GENERATING MARKET PORTFOLIO
