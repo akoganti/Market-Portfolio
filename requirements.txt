@@ -57,6 +57,7 @@ mkl=2019.4=233
 mkl-service=2.3.0=py38hfbe908c_0
 mkl_fft=1.2.0=py38hc64f4ea_0
 mkl_random=1.1.1=py38h959d312_0
+msedge-selenium-tools=3.141.2=pypi_0
 nbclient=0.5.1=py_0
 nbconvert=6.0.7=py38_0
 nbformat=5.0.8=py_0
@@ -97,7 +98,7 @@ qtconsole=4.7.7=py_0
 qtpy=1.9.0=py_0
 readline=8.0=h1de35cc_0
 requests=2.24.0=py_0
-selenium=3.141.0=py38h1de35cc_1001
+selenium=3.141.0=pypi_0
 send2trash=1.5.0=py38_0
 setuptools=50.3.1=py38hecd8cb5_1
 sip=4.19.8=py38h0a44026_0
