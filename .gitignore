@@ -4,3 +4,4 @@ __pycache__/
 .vscode/
 token.txt
 apiToken.py
+.DS_Store

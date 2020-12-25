@@ -1,3 +1,5 @@
+import numpy as np
+
 def etfCurrPrices(etfList):
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
@@ -14,7 +16,7 @@ def etfCurrPrices(etfList):
     return prices
 
 # Enter in total amount you would like to invest under amountInvested 
-amountInvested = 340
+amountInvested = 10000
 
 
 # GENERATING MARKET PORTFOLIO
